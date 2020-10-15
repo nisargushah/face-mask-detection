@@ -6,6 +6,7 @@
    * [Development Environment](#development-environment)
    * [Responsibility of Team members](#responsibility-of-team-members)
    * [Future Goals](#future-goals)
+* [References](#references)
 
 
 ## Introduction
@@ -54,6 +55,10 @@ training to analyse further new images - to load the detector, to detect the fac
 detect the mask as shown in Figure 1 below.
 
 
+<p align="center">
+  <img src="images/system_overview.png" width="600" title="hover text">
+</p>
+
 
 
 ### Development Environment
@@ -94,3 +99,7 @@ report
 
 If time permits, we would also like to implement a social distancing detector
 using some of the same libraries.
+
+
+### References
+
