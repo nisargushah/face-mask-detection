@@ -81,7 +81,7 @@ implement our pre-train model into a live scenario.
 
 We have decided that for the purpose of this project it is necessary to divide worklaod from the begining. Heres' and overview of that ... 
 
-[Nisarg Shah](www.nisargushah.com) - Development lead on both the phases, and administrative head (maintains the GitHub repo,
+[Nisarg Shah](https://nisargushah.com) - Development lead on both the phases, and administrative head (maintains the GitHub repo,
 YouTube link, document submissions, and collaboration among group members)
 
 [Hemantha Govindu](www.uta.edu) - Primary developer for Phase 1 (Training the Face Mask Detector), in charge of project
