@@ -1,7 +1,7 @@
 # Table of Content
 * [Introduction](#introduction)
 * [Project Proposal](#project-proposal)
-   * [Asbstract](#abstract)
+   * [Abstract](#abstract)
    * [System Overview](#system-overview)
    * [Development Environment](#development-environment)
    * [Responsibility of Team members](#responsibility-of-team-members)
@@ -56,7 +56,7 @@ detect the mask as shown in Figure 1 below.
 
 
 <p align="center">
-  <img src="images/system_overview.png" width="600" title="hover text">
+  <img src="documentation/images/system_overview.png" width="600" title="hover text">
 </p>
 
 
