@@ -104,7 +104,7 @@ using some of the same libraries.
 For setting up the development environment,wewill be using the Anaconda toolkit which can be download from [here](https://www.anaconda.com/products/individual) for free. After downloading the environment, we can go to the desired folder where we want to copy the repoitory. After that open Ananconda bash shell for Windows user and terminal for Mac/Linux user and write the following:
 
 
-```concole
+```console
 
 foo@bar~$ conda env create -f environment.yml
 ```
