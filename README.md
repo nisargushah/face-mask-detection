@@ -103,13 +103,19 @@ using some of the same libraries.
 
 For setting up the development environment,wewill be using the Anaconda toolkit which can be download from [here](https://www.anaconda.com/products/individual) for free. After downloading the environment, we can go to the desired folder where we want to copy the repoitory. After that open Ananconda bash shell for Windows user and terminal for Mac/Linux user and write the following:
 
+```console
+foo@bar~$ git clone https://github.com/nisargushah/face-mask-detection.git
+
+```
+
+This should clone the repository in that location.
 
 ```console
 
 foo@bar~$ conda env create -f environment.yml
 ```
 
-This should create all the neccessary environment, after that we can clone the repository there and continue with the steps.
+This should create all the neccessary environment.
 
 
 ## Please note that this is still an under-development project, so things will keep on changing but we will try to keep updating it. Thanks!
