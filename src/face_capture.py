@@ -18,7 +18,7 @@ import cv2
 
 ## We will be using the haarcascade_frontalface_default xml file for own training
 ## This is because it is extremently efficient
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("../models/haarcascade_frontalface_default.xml")
 
 ## To open up our front camera
 capture = cv2.VideoCapture(0)
