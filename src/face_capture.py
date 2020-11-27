@@ -9,6 +9,8 @@ Goal:  The idea behind this is that we can extract the faces from live feed
         using the camera and then feed it into our deep learning model
         that aslo has face images only and train it for better accuracy
 
+Date: 27th November 2020
+
 """
 
 
