@@ -6,6 +6,8 @@
    * [Development Environment](#development-environment)
    * [Responsibility of Team members](#responsibility-of-team-members)
    * [Future Goals](#future-goals)
+   
+* [How to set up the development environment](#how-to-set-up-the-development-environment)
 * [References](#references)
 
 
@@ -52,12 +54,8 @@ all such images and then train our network on them.
 used in the project. As mentioned previously, the algorithm will be a two phase process, first,
 having to train the model to detect face masks using the dataset, and then applying this
 training to analyse further new images - to load the detector, to detect the face, and then to
-detect the mask as shown in Figure 1 below.
+detect the mask.
 
-
-<p align="center">
-  <img src="documentation/images/system_overview.png" width="600" title="hover text">
-</p>
 
 
 
@@ -99,6 +97,23 @@ report
 
 If time permits, we would also like to implement a social distancing detector
 using some of the same libraries.
+
+
+## How to set up the development environment
+
+For setting up the development environment,wewill be using the Anaconda toolkit which can be download from [here](https://www.anaconda.com/products/individual) for free. After downloading the environment, we can go to the desired folder where we want to copy the repoitory. After that open Ananconda bash shell for Windows user and terminal for Mac/Linux user and write the following:
+
+
+```concole
+
+foo@bar~$ conda env create -f environment.yml
+```
+
+This should create all the neccessary environment, after that we can clone the repository there and continue with the steps.
+
+
+## Please note that this is still an under-development project, so things will keep on changing but we will try to keep updating it. Thanks!
+
 
 
 ### References
