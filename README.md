@@ -118,6 +118,16 @@ foo@bar~$ conda env create -f environment.yml
 This should create all the neccessary environment.
 
 
+To download the dataset, 
+
+
+```console
+
+foo@bar~$ kaggle datasets download -d skyforce/mask-detection
+
+```
+The dataset is almost 6GB in totalsize
+
 ## Please note that this is still an under-development project, so things will keep on changing but we will try to keep updating it. Thanks!
 
 
