@@ -77,7 +77,7 @@ binary = LabelBinarizer()
 train_label = binary.fit_transform(train_label)
 train_label = to_categorical(train_label)
 
-datagen = ImageDataGenerator()
+datagen = ImageDataGenerator(rescale=1/255.)
 
 base = MobileNetV2(weights="imagenet", include_top = False, input_tensor = Input(shape=(224,224,3)))
 
@@ -99,7 +99,19 @@ opt = Adam(lr=0.001, decay=1e-6)
 model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])  #https://stackoverflow.com/questions/61742556/valueerror-shapes-none-1-and-none-2-are-incompatible
 
 
-out = model.fit(train_data, train_label,batch_size=32,epochs=5, validation_data=(test_data,test_label))
+out = model.fit(datagen.flow(train_data, train_label,batch_size=32),epochs=5, validation_data=(test_data,test_label))
 
 
 model.save('../../model')
+
+
+
+"""
+
+Referecnes
+
+
+https://keras.io/api/preprocessing/image/
+
+
+"""
