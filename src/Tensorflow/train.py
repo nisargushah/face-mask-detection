@@ -84,10 +84,10 @@ base = MobileNetV2(weights="imagenet", include_top = False, input_tensor = Input
 
 head = base.output
 
-#head = AveragePooling2D(pool_size=(7,7))(head)
+head = AveragePooling2D(pool_size=(7,7))(head)
 head = Flatten()(head)
-head = Dense(128, activation='relu')(head)
-head = Dropout(0.7)(head)
+head = Dense(64, activation='relu')(head)
+head = Dropout(0.4)(head)
 head = Dense(2, activation='softmax')(head)
 
 model = Model(inputs=base.input, outputs=head)
@@ -96,7 +96,7 @@ for layer in base.layers:
     layer.trainable = False
 
 opt = Adam(lr=0.001, decay=1e-6)
-model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])
+model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])  #https://stackoverflow.com/questions/61742556/valueerror-shapes-none-1-and-none-2-are-incompatible
 
 
 out = model.fit(train_data, train_label,batch_size=32,epochs=5, validation_data=(test_data,test_label))
