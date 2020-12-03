@@ -77,8 +77,9 @@ binary = LabelBinarizer()
 train_label = binary.fit_transform(train_label)
 train_label = to_categorical(train_label)
 
-datagen = ImageDataGenerator(rescale=1/255.)
 
+datagen  = ImageDataGenerator(
+            rotation_range = 20,zoom_range=0.15,width_shift_range=0.2,height_shift_range=0.2, shear_range = 0.15, horizontal_flip=True, fill_mode='nearest')
 base = MobileNetV2(weights="imagenet", include_top = False, input_tensor = Input(shape=(224,224,3)))
 
 
@@ -99,7 +100,7 @@ opt = Adam(lr=0.001, decay=1e-6)
 model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])  #https://stackoverflow.com/questions/61742556/valueerror-shapes-none-1-and-none-2-are-incompatible
 
 
-out = model.fit(datagen.flow(train_data, train_label,batch_size=32),epochs=5, validation_data=(test_data,test_label))
+out = model.fit(datagen.flow(train_data, train_label,batch_size=32),steps_per_epoch =len(train_label)// 32,epochs=5, validation_data=(test_data,test_label), validation_steps = len(test_label)// 32)
 
 
 model.save('../../model')

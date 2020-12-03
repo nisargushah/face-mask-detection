@@ -18,7 +18,7 @@ import cv2
 
 ## We will be using the haarcascade_frontalface_default xml file for own training
 ## This is because it is extremently efficient
-face_cascade = cv2.CascadeClassifier("../models/haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("models/haarcascade_frontalface_default.xml")
 
 ## To open up our front camera
 capture = cv2.VideoCapture(0)
@@ -30,10 +30,11 @@ while True:
     # Reading in the data from the front camera
     isTrue, frame = capture.read()
     # The "frame" variable will contain the actual frame that we obtain from the camera
-
+    fps = fps = capture.get(cv2.CAP_PROP_FPS)
     # using tbe face_cascade to detect faces
     faces = face_cascade.detectMultiScale(frame, scaleFactor = 1.05, minNeighbors=5)
-
+    cv2.putText(frame, str(fps), (7, 70), cv2.FONT_HERSHEY_SIMPLEX , 1, (100, 255, 0), 3, cv2.LINE_AA)
+    #print(fps)
     # Faces will be giving us the co-ordinates in which the face is detected.
 
     ## We are using the for-loopto looparound if we have more than one faces detected
