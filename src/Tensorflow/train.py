@@ -96,10 +96,10 @@ for layer in base.layers:
     layer.trainable = False
 
 opt = Adam(lr=0.001, decay=1e-6)
-model.compile(loss="categorical_crossentropy",optimizer=opt,metrics=["accuracy"])
+model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])
 
 
-out = model.fit(train_data, train_label,epochs=5, validation_data=(test_data,test_label))
+out = model.fit(train_data, train_label,batch_size=32,epochs=5, validation_data=(test_data,test_label))
 
 
 model.save('../../model')
