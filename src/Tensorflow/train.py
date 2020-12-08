@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import keras
 from keras.preprocessing.image import ImageDataGenerator
-from keras.applications import MobileNetV2
+from tensorflow.keras.applications import MobileNetV2
 from keras.layers import AveragePooling2D, Dense, Dropout,Flatten, Input
 from keras.models import Model
 from keras.optimizers import Adam
@@ -18,6 +18,7 @@ from keras.applications.inception_v3 import preprocess_input
 from keras.preprocessing.image import img_to_array, load_img
 from keras.utils import to_categorical
 from sklearn.preprocessing import OneHotEncoder, LabelBinarizer
+from sklearn.utils import shuffle
 
 
 ### Reading in all the images
@@ -31,9 +32,10 @@ test_label = []
 test_data = []
 print(os.listdir(with_mask_path))
 for file in os.listdir(with_mask_path):
+    print(os.path.join(with_mask_path, file))
     img = load_img(os.path.join(with_mask_path, file), target_size=(224,224))
     img = img_to_array(img)
-    print(file)
+    #print(file)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = preprocess_input(img)
 
@@ -44,7 +46,7 @@ for file in os.listdir(without_mask_path):
     img = load_img(os.path.join(without_mask_path, file), target_size=(224,224))
     img = img_to_array(img)
     img = preprocess_input(img)
-    print(file)
+    #print(file)
 
     train_data.append(img)
     train_label.append(1)
@@ -53,7 +55,7 @@ for file in os.listdir(test_path):
     img = load_img(os.path.join(test_path, file), target_size=(224,224))
     img = img_to_array(img)
     img = preprocess_input(img)
-    print(file)
+    #print(file)
 
     test_data.append(img)
     test_label.append(0)
@@ -67,28 +69,32 @@ for file in os.listdir(test_path_w):
     test_data.append(img)
     test_label.append(1)
 
+
 train_data = np.asarray(train_data, dtype=np.float32)
 train_label = np.asarray(train_label)
 test_data = np.asarray(test_data, dtype=np.float32)
 test_label = np.asarray(test_label)
-
+#train_data,train_label, test_data, test_label = shuffle(train_data,train_label, test_data, test_label, random_state=42)
+print(len(np.unique(test_label)))
 binary = LabelBinarizer()
 
 train_label = binary.fit_transform(train_label)
 train_label = to_categorical(train_label)
 
+test_label = binary.fit_transform(test_label)
+test_label = to_categorical(test_label)
 
-datagen  = ImageDataGenerator(
-            rotation_range = 20,zoom_range=0.15,width_shift_range=0.2,height_shift_range=0.2, shear_range = 0.15, horizontal_flip=True, fill_mode='nearest')
+
+datagen  = ImageDataGenerator()
 base = MobileNetV2(weights="imagenet", include_top = False, input_tensor = Input(shape=(224,224,3)))
 
 
 head = base.output
 
 head = AveragePooling2D(pool_size=(7,7))(head)
-head = Flatten()(head)
+head = Flatten(name="flatten")(head)
 head = Dense(64, activation='relu')(head)
-head = Dropout(0.4)(head)
+head = Dropout(0.7)(head)
 head = Dense(2, activation='softmax')(head)
 
 model = Model(inputs=base.input, outputs=head)
@@ -96,16 +102,20 @@ model = Model(inputs=base.input, outputs=head)
 for layer in base.layers:
     layer.trainable = False
 
-opt = Adam(lr=0.001, decay=1e-6)
+opt = Adam(lr=1e-4, decay=1e-4/5)
 model.compile(loss="binary_crossentropy",optimizer=opt,metrics=["accuracy"])  #https://stackoverflow.com/questions/61742556/valueerror-shapes-none-1-and-none-2-are-incompatible
 
 
-out = model.fit(datagen.flow(train_data, train_label,batch_size=32),steps_per_epoch =len(train_label)// 32,epochs=5, validation_data=(test_data,test_label), validation_steps = len(test_label)// 32)
+out = model.fit(datagen.flow(train_data, train_label,batch_size=32),steps_per_epoch =len(train_label)// 32,epochs=5, validation_data=datagen.flow(test_data, test_label,batch_size=32), validation_steps = len(test_label)// 32)
 
 
 model.save('../../model')
 
+ans = model.predict(test_data)
+id = np.argmax(ans)
+print(ans)
 
+print(len(test_data))
 
 """
 
