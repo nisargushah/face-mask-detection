@@ -2,6 +2,12 @@
 
 @author: Nisarg Shah
 
+Purpose: The main aim of this code is to train out neural network to get the
+          maximum possible accuracy along with low compute times
+
+
+Goal: Stable and accuracte model
+
 """
 
 import os
@@ -10,11 +16,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import keras
 from keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import MobileNetV2
+from keras.applications import MobileNetV2
 from keras.layers import AveragePooling2D, Dense, Dropout,Flatten, Input
 from keras.models import Model
 from keras.optimizers import Adam
-from keras.applications.inception_v3 import preprocess_input
+from keras.applications.mobilenet_v2 import preprocess_input
 from keras.preprocessing.image import img_to_array, load_img
 from keras.utils import to_categorical
 from sklearn.preprocessing import OneHotEncoder, LabelBinarizer
@@ -111,9 +117,7 @@ out = model.fit(datagen.flow(train_data, train_label,batch_size=32),steps_per_ep
 
 model.save('../../model')
 
-ans = model.predict(test_data)
-id = np.argmax(ans)
-print(ans)
+#ans = model.predict("../../1.png")
 
 print(len(test_data))
 
