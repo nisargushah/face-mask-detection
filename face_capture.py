@@ -1,3 +1,18 @@
+"""
+
+ @author: Nisarg Shah
+
+
+ Purpose:  Using our trained model to predict in live time
+
+
+ Goal:  Stable and realiable results
+
+ """
+
+
+### Step 1: Importing our libraries
+
 import cv2, os
 import keras
 import numpy as np
@@ -11,10 +26,7 @@ from keras.applications.mobilenet_v2 import preprocess_input
 ## This is because it is extremently efficient
 face_cascade = cv2.CascadeClassifier("src/Tensorflow/models/haarcascade_frontalface_default.xml")
 
-#os.chdir("model")
-#new_model  = keras.models.clone_model('final.h5')
-#str = 'final'
-#new_model = load_model(str)
+#Loading our model
 model = keras.models.load_model("model")
 
 
@@ -33,7 +45,9 @@ while True:
     #model = load_model(new_model)
     # using tbe face_cascade to detect faces
     faces = face_cascade.detectMultiScale(frame, scaleFactor = 1.05, minNeighbors=5)
-    cv2.putText(frame, str(fps), (7, 70), cv2.FONT_HERSHEY_SIMPLEX , 1, (224, 224, 3), 3, cv2.LINE_AA)
+	## Displayig the FPS. Please note that the FPS are not always accuracte because of the difference
+	## in time between displaying the frame and rendering the frame (predicting our model)
+	cv2.putText(frame, str(fps), (7, 70), cv2.FONT_HERSHEY_SIMPLEX , 1, (224, 224, 3), 3, cv2.LINE_AA)
     ##print(fps)
     ##print(len(faces))
     # Faces will be giving us the co-ordinates in which the face is detected.
@@ -44,7 +58,6 @@ while True:
     w = 0
     h = 0
     for _x,_y,_w,_h in faces:
-
         ## We draw a triangle around the face.
         #img = cv2.rectangle(frame,(_x,_y), (_x+_w,_y+_h), (0,255,0), 3)
         x = _x
@@ -70,17 +83,29 @@ while True:
         ## to be stored at a different place
         #clone = cv2.resize(clone, (224,224))
         #print(clone.shape)
-        #face = img[startY:endY, startX:endX]
-        face = cv2.cvtColor(np.float32(clone), cv2.COLOR_BGR2RGB)
-        face = cv2.resize(face, (224, 224))
-        face = img_to_array(face)
-        face = preprocess_input(face)
+
+		## Using it to convert to RGB from BRG.This step is optional
+		face = cv2.cvtColor(np.float32(clone), cv2.COLOR_BGR2RGB)
+        face = cv2.resize(face, (224, 224)) ## Resizing it to match our dataset
+        face = img_to_array(face) ## Converting image to  array
+        face = preprocess_input(face) ## Preprocessign it
+
+		## Because of the way Keras tunes its images, we need 4 dimentions and not 3,
+		## So we need to expand our dimentions
         face = np.expand_dims(face, axis=0)
+
+		## Predicting the image
         (mask, withoutMask) = model.predict(face)[0]
 
+		## Assigning labels
 
-        label = "Mask" if mask > withoutMask else "No Mask"
-        color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
+		if mask > withoutMask:
+			label = "Mask"
+		else:
+         	label = "No Mask"
+
+		## Setting green for with mask and red for without mask
+		color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
         # include the probability in the label
         label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
