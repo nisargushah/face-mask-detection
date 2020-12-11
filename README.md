@@ -4,9 +4,9 @@
    * [Abstract](#abstract)
    * [System Overview](#system-overview)
    * [Development Environment](#development-environment)
-   * [Responsibility of Team members](#responsibility-of-team-members)
+   * [How to run the file](#how-to-run-the-file)
    * [Future Goals](#future-goals)
-   
+
 * [How to set up the development environment](#how-to-set-up-the-development-environment)
 * [References](#references)
 
@@ -46,7 +46,7 @@ detecting the face masks. This will serve as the basic functionality for our app
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For this project, we will try to utilize the webcam that is already present in our phones
 or computers and using various python libraries, we will train neural network to detect if a
 person is wearing a face mask or not or if they are wearing it wrong. We will use Kaggle
-dataset as our training data to train our Convolution Neural Network. We will use this dataset 
+dataset as our training data to train our Convolution Neural Network. We will use this dataset
 and use tensorflow’s advanced object detection feature to isolate face images and then gather
 all such images and then train our network on them.
 
@@ -80,18 +80,7 @@ implement our pre-train model into a live scenario.
 
 ➢ Imutils and tkinter for some useful functions and GUI effects, if needed.
 
-### Responsibility of Team members
 
-We have decided that for the purpose of this project it is necessary to divide worklaod from the begining. Heres' and overview of that ... 
-
-[Nisarg Shah](https://nisargushah.com) - Development lead on both the phases, and administrative head (maintains the GitHub repo,
-YouTube link, document submissions, and collaboration among group members)
-
-[Hemantha Govindu](www.uta.edu) - Primary developer for Phase 1 (Training the Face Mask Detector), in charge of project
-progress report
-
-[Nihar Gupte](https://www.linkedin.com/in/nihargupte/) - Primary developer for Phase 2 (Applying the Face Mask Detector), in charge of final project
-report
 
 ### Future Goals
 
@@ -118,19 +107,21 @@ foo@bar~$ conda env create -f environment.yml
 This should create all the neccessary environment.
 
 
-To download the dataset, 
+## How to run the file
 
+If you just want to run and see how the program behaves (demo) then follow this step:
 
 ```console
 
-foo@bar~$ kaggle datasets download -d skyforce/mask-detection
+foo@bar~$ python3 face_capture.py
 
 ```
-The dataset is almost 6GB in totalsize
 
-## Please note that this is still an under-development project, so things will keep on changing but we will try to keep updating it. Thanks!
+This should be sufficent to get a demo of the project.
+
+If you wish to train the model yourself you can compile the train.py file in the src/Tensorflow folder similarly.
+
 
 
 
 ### References
-
